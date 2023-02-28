@@ -1,0 +1,56 @@
+Paintaings
+Ram is an avid collector of paintings. In his study he has two long shelves with N paintings in each of them. He has invited the artist Riya to decorate his study. Riya feels that the arrangement of paintings in the two shelves is not aesthetic. She has come up with a measure for the elegance of the two shelves called Skew. The Skew of the two shelves is defined to be the sum of the heights of the tallest painting in each of the two shelves.
+Riya recommends rearranging the paintings between the two shelves so that the Skew is as small as possible. On the other hand, Ram prides himself as a balanced personality and always wants the two shelves to have an equal number of paintings, N in each.
+Riya is an artist, she merely recommends what needs to be done, leaving the actual rearranging to Ram. Ram on the other hand is lazy and would like to do very little work. As a compromise, Ram is willing to exchange paintings between the two shelves K times and would like to do these exchanges cleverly so as to make the Skew as small as possible (via K swaps).
+For example, suppose each shelf contained 5 paintings, where the heights of the paintings on the first shelf are 3, 5, 2, 7 and 1, and the heights of the paintings on the second shelf are 14, 2, 3, 10 and 4. The Skew of this arrangement is 7 + 14 = 21. If K = 1, i.e., Ram is willing to exchange only one painting between the two, he can swap the painting with height 2 in shelf 1 with the painting with height 14 in shelf 2 and this will increase the Skew to 24! On the other hand if he swaps the painting with height 7 in the first shelf with the painting with height 3 in the second shelf then the resulting arrangement has a Skew of 5 + 14 = 19. You can verify that if K = 1 then this is the smallest Skew that can be achieved. So for this case the answer is 19.
+Your task is to write a program that takes as input, N - the number of paintings in each shelf, K - the number of swaps that Ram is willing to do, and the heights of the paintings on the two shelves, and computes the smallest Skew value that can be achieved through at most K swaps of paintings between the two shelves.
+Input format
+There is only one line, which contains ((2 × N) + 2) space-separated integers.
+The first two integers are N and K.
+The next N integers, give the heights of the N paintings on the first shelf.
+The last N integers, give the heights of the N paintings on the second shelf.
+Output format
+A single line with a single integer gives the minimum Skew that can be achieved via at most K swaps between the two shelves.
+Sample Input
+5 1 3 5 2 7 1 14 2 3 10 4
+Sample Output
+19
+Explanation
+N = 5, K = 1
+The first shelf contains paintings with heights {3, 5, 2, 7, 1}.
+The second shelf contains paintings with heights {14, 2, 3, 10, 4}
+This is same as the example explained above, and so the answer is 19.
+----------------------------------------------------------------------------------------------------------
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n, k;
+    cin >> n >> k;
+
+    int a[n], b[n];
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    for (int i = 0; i < n; i++) {
+        cin >> b[i];
+    }
+
+    sort(a, a + n);
+    sort(b, b + n);
+
+    int skew = max(a[n-1], b[n-1]);
+    for (int i = 0; i < k; i++) {
+        if (a[i] < b[n-i-1]) {
+            skew = min(skew, max(a[n-i-2], b[n-i-1]));
+        }
+        else {
+            break;
+        }
+    }
+
+    cout << skew + max(a[k], b[k]) << endl;
+
+    return 0;
+}
