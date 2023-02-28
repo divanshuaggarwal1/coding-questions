@@ -1,0 +1,76 @@
+Couple Dance
+Ninja is organizing a dance competition where people will participate in teams of two, and in each team, there will be one boy and one girl. There are N people available for Ninja to choose teams from them, and they are represented by a string S where boys are denoted by ‘0’ and girls are denoted by ‘1’. Now Ninja will choose one boy and one girl (if possible) from the available people to form teams.
+But there is one condition:
+Ninja can only choose a boy and a girl to form a team only if they are adjacent. And after removing the chosen people from the string, the neighboring peoples will become adjacent to each other.
+For Example:
+If the given string S is: 00101
+Then Ninja can form two teams:
+First, choose the 2nd and the 3rd people, and the resulting string will become 001. Then again, choose the 2nd and 3rd people to form the second team.
+Now Ninja is thinking about the maximum number of teams he can select. Your task is to tell the maximum number of teams Ninja can select if he chooses the teams optimally.
+Input Format:
+The first line will contain a single integer ‘T’ denoting the number of test cases. Then the test cases follow.
+
+The first line of each test case will contain a single integer ‘N’, denoting the number of available people to form teams.
+
+The Second line of each test case will contain a string ‘S’ of length ‘N’ containing only ‘0’ and ‘1’. ‘0’ will denote a boy, and ‘1’ will denote a girl.
+Output Format:
+For each test case, print a single integer denoting the maximum number of teams Ninja can form.
+Note:
+You are not required to print anything; it has already been taken care of. Just implement the function.
+Constraints:
+1 <= T <= 5
+1 <= N <= 10^5
+S[i] = ‘0’ or ‘1’
+
+Time Limit: 1 sec.
+Sample Input 1:
+2
+4
+1001
+4
+0011
+Sample Output 1:
+2
+2
+Explanation For Sample Output 1:
+For the first test case, We can select the 3rd and 4th people for the first team and the 1st and 2nd people for the second team.
+
+For the second test case, we can select the 2nd and 3rd people for the first team. After removing them, the resulting string will be 01. Now we can select the 1st and second people to form the second team.
+Sample Input 2:
+2
+6
+011001
+6
+011011
+Sample Output 2:
+3
+2
+-------------------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+#include<algorithm>
+
+int maxTeams(int n1, string s1){
+   
+    // Declare two variables, ‘X’ and ‘Y’, to store the
+    // number of boys and girls in the required  input.
+    int X = 0, Y = 0;
+
+    // Iterate over the string ‘S’.
+    for(int i = 0; i < n1; i++){
+
+        // If the current character is ‘0.’
+        if(s1[i] == '0'){
+
+            // Increment the value of  ‘X’ by 1.
+            X++;
+        }
+        else{
+
+            // Increment  the value of ‘Y’ by 1..
+            Y++;
+        }
+    }
+
+   
+    return min(X,Y);
+}
