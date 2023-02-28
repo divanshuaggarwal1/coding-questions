@@ -1,0 +1,82 @@
+Reduce Fat
+There were ‘N’ food items placed one after another, ith of which has a fat value of ‘A[i]’. Both Alice and Bob love eating and are planning to eat all the ‘N’ items. Eating ‘X’ number of foods will lead to an increase in weight by lcm of all the fat values of all items eaten, i.e, if a person eats ‘M’ food items having fat value A[1], A[2] … A[M] then the increase in weight will be lcm(A[1], A[1], ... A[M]).
+Alice proposes a plan to divide the food items into two continuous groups (each group should have at least 1 item) so that she eats one group and Bob eats the other. Alice does not want to gain weight but loves to eat, so she divides the array and selects such a group so that her increase in weight is minimum possible and she gets to eat as many food items.
+Find the minimum weight gain by Alice and count the max food items she can eat such that her weight gain is the minimum possible.
+Note that the main aim is to have the minimum possible weight gain and then find the maximum count of food items she can eat such that weight gain is equal to the minimum possible weight gain.
+Input Format:
+The first line of input contains an integer ‘T’, denoting the number of test cases.
+
+The first line of each test case contains one integer ‘N’, denoting the number of food items.
+
+The following line contains an array ‘A’ of ‘N’ spaced integers denoting the fat value of each food item.
+Output Format:
+For each test case, print two single-spaced integers in a new line denoting the minimum weight gain by Alice and the count of food items she can eat.
+Note:
+You are not required to print the expected output. It has already been taken care of. Just implement the function.
+Constraints:
+1 <= T <=  5
+2 <= N <= 10^5
+1 <= A[i] <= 10^9 
+
+Time Limit: 1 sec
+Sample Input 1:
+2
+4 
+6 1 5 7
+2
+8 9
+Sample Output 1:
+6 2
+8 1
+Explanation for Sample Input 1:
+In the first test case, Alice can divide the items into [6, 1] and [5, 7] and eat the first group. So her weight increases by 6, which is lcm of (6, 1), and she gets to eat 2 items.
+
+In the second test case, Alice can divide the items into [8] and [9] and eat the first group. As a result, her weight increases by 8, and she eats only 1 item.
+Sample Input 2:
+2
+5 
+9 1 3 1 9
+3 
+2 2 2
+Sample Output 2:
+9 4 
+2 2
+
+--------------------------------------------------------------------------------------------
+#include <bits/stdc++.h>
+vector<int> reduceFat(vector<int> food)
+{
+    int n = food.size();
+
+    int ans = min(food[0], food.back());
+    int len = 0;
+
+    for (int i = 0; i + 1 < n; i++)
+    {  
+        if ( ans % food[i] == 0)
+        {
+            len = max(len, i + 1);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    for (int i = n - 1; i > 0; i--)
+    {  
+        if (ans % food[i] == 0)
+        {
+            len = max(len, n - i);
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    vector<int> result = {ans, len};
+
+    return result;
+} 
+
